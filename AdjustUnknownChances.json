@@ -1,0 +1,10 @@
+{
+  "id": "AdjustUnknownChances",
+  "name": "Adjust Unknown Chances",
+  "author": "KyeYongChoo",
+  "description": "Hover an unknown (?) map node to see the odds of it becoming an Event, Monster, Elite, Treasure or Shop room. Optionally set your own Monster/Elite/Treasure/Shop odds below; whatever is left over goes to Events.",
+  "version": "1.0.0",
+  "has_pck": false,
+  "has_dll": true,
+  "affects_gameplay": true
+}

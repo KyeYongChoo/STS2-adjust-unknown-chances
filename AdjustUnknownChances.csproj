@@ -1,0 +1,51 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <OutputType>Library</OutputType>
+    <Nullable>enable</Nullable>
+    <LangVersion>12.0</LangVersion>
+    <AssemblyName>AdjustUnknownChances</AssemblyName>
+    <RootNamespace>AdjustUnknownChances</RootNamespace>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
+    <!-- Override with: dotnet build -p:STS2GameDir="..." -->
+    <STS2GameDir Condition="'$(STS2GameDir)' == ''">C:\Program Files (x86)\Steam\steamapps\common\Slay the Spire 2</STS2GameDir>
+    <STS2GameDataDir Condition="'$(STS2GameDataDir)' == ''">$(STS2GameDir)/data_sts2_windows_x86_64</STS2GameDataDir>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="sts2">
+      <HintPath>$(STS2GameDataDir)/sts2.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="GodotSharp">
+      <HintPath>$(STS2GameDataDir)/GodotSharp.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="0Harmony">
+      <HintPath>$(STS2GameDataDir)/0Harmony.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <!-- The optional BaseLib integration is its own assembly (see src/BaseLibBridge.cs). -->
+  <ItemGroup>
+    <Compile Remove="BaseLibCompat/**" />
+    <None Remove="BaseLibCompat/**" />
+  </ItemGroup>
+
+  <Target Name="BuildBaseLibCompat" AfterTargets="Build">
+    <MSBuild Projects="BaseLibCompat/AdjustUnknownChances.BaseLib.csproj" Targets="Restore;Build"
+             Properties="Configuration=$(Configuration);STS2GameDir=$(STS2GameDir)" />
+  </Target>
+
+  <!-- dotnet build -p:Install=true copies the mod into <game>/mods/AdjustUnknownChances -->
+  <Target Name="InstallMod" AfterTargets="BuildBaseLibCompat" Condition="'$(Install)' == 'true'">
+    <PropertyGroup>
+      <ModInstallDir>$(STS2GameDir)/mods/AdjustUnknownChances</ModInstallDir>
+    </PropertyGroup>
+    <MakeDir Directories="$(ModInstallDir)" />
+    <Copy SourceFiles="$(TargetPath);$(TargetDir)AdjustUnknownChances.BaseLib.dll;AdjustUnknownChances.json" DestinationFolder="$(ModInstallDir)" />
+    <Message Importance="high" Text="Installed mod to $(ModInstallDir)" />
+  </Target>
+</Project>
