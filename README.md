@@ -1,8 +1,10 @@
 # Adjust Unknown Chances (Slay the Spire 2 mod)
 
+**Steam Workshop:** https://steamcommunity.com/sharedfiles/filedetails/?id=3814064648
+
 - **Map tooltip:** hover an unvisited **?** node to see its odds of becoming an Event, Monster, Elite, Treasure or Shop room. The Elite chance is only above zero with the **Deadly Events** modifier, or if you set it yourself.
 - **Custom odds:** tick **Use custom odds**, then set Monster/Elite/Treasure/Shop. The box underneath shows the Event chance, which is whatever is left over. The settings are in two places, and both change the same settings:
-  - **Main Menu → Settings → Mods → Adjust Unknown Chances** (always available)
+  - **Main Menu → Settings → General → Mod Settings → Adjust Unknown Chances** (always available)
   - **Main Menu → Mod Configuration → Adjust Unknown Chances** (only when [BaseLib](https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127) is installed; BaseLib is optional)
 
 ## How the odds work (vanilla rules, which the mod follows)
